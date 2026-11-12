@@ -1,13 +1,21 @@
- int n = nums.size();
-        unordered_map<int,int> cnt; 
-        int sum=0;
-        cnt[sum] = 1;
+ unordered_map<int, int> mp;
 
-        int ans = 0;
-        for (int ele : nums) {
-            sum += ele;
-            if (cnt[sum-k] > 0)
-                ans += cnt[sum-k];
-            cnt[sum] ++;
+        mp[0] = 1;
+
+        int prefixSum = 0;
+        int count = 0;
+
+        for (int i = 0; i < nums.size(); i++) {
+
+            prefixSum += nums[i];
+
+            int remaining = prefixSum - k;
+
+            if (mp.find(remaining) != mp.end()) {
+                count += mp[remaining];
+            }
+
+            mp[prefixSum]++;
         }
-        return ans;
+
+        return count;
